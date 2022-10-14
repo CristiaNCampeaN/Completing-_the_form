@@ -3,21 +3,6 @@ const { toCamelCase, getRandomInput } = require('../../support/helpingMethods')
 
 
 /**
- * @example The "Logo" "Icon" should be visible
- * @summary Move mouse to element
- * @description Notes:
- * -The locators name and category has to be defined in <specific page>.locator.<locator category>.<locator name>
- * @param locatorName {string} e.g "Logo", the name of the locator
- * @param locatorType {string} e.g "Icon", the category of the locator
- * @returns {Promise}
- */
-function moveMouseToElement(locatorName, locatorType) {
-    cy.getElement(locatorName, locatorType).trigger('click')
-}
-When(/^the user move mouse to "([^"]*)" "([^"]*)"$/, moveMouseToElement);
-
-
-/**
  * @example
  * When the user click on the "Menu" "button"
  * @summary Click on a specific element
@@ -54,33 +39,3 @@ function completeInput(formName, table) {
 }
 When(/^the user complete the "([^"]*)" form$/, completeInput)
 
-
-/**
- * @example
- * When the user access in new tab the "Facebook" "Facebook" page
- * @summary Open in same browser tab the "Facebook" page
- * @param locatorName {string} e.g "Facebook" the name of the locator
- * @param locatorType {string} e.g "link", the category of the locator
- */
-function newTab(locatorName, locatorType){
-    cy.getElement(locatorName, locatorType).invoke('removeAttr', 'target').click()
-}
-When(/^the user access in new tab the "([^"]*)" "([^"]*)"$/, newTab);
-
-
-function completeText(locatorName, locatorType, text){
-    cy.getElement(locatorName, locatorType).type(text)
-}
-When(/^the user complete "([^"]*)" "([^"]*)" with "([^"]*)"$/, completeText)
-
-
-When(/^the user test iframe$/, function () {
-
-    const iframe = cy.get('#gform_ajax_frame_3')
-        .its('0.contentDocument.body')
-        .should('be.visible')
-        .then(cy.wrap)
-
-    iframe.type('Welcome')
-
-});
